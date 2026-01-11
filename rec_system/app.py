@@ -65,7 +65,8 @@ def get_model_path(path: str) -> str:
 
 def load_models():
     model = CatBoostClassifier()
-    model_path = get_model_path("model/catboost_model_5.cbm")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(current_dir, '..', 'model', 'catboost_model_5.cbm')
     model.load_model(model_path)
 
     return model

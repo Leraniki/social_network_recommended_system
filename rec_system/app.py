@@ -66,7 +66,7 @@ def get_model_path(path: str) -> str:
 def load_models():
     model = CatBoostClassifier()
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    model_path = os.path.join(current_dir, '..', 'model', 'catboost_model_5.cbm')
+    model_path = os.path.join(current_dir, '..', 'model', 'model_test.cbm')
     model.load_model(model_path)
 
     return model
@@ -111,10 +111,13 @@ def get_recommended_posts(user_id, time, limit):
         lambda pid: calc_sim_score(user_likes_list, pid)
     )
 
+    n_comp=15
+    pca_columns = [f'text_pca_{i}' for i in range(n_comp)]
+
     train_columns = [
         'gender', 'age', 'country', 'city', 'exp_group', 'os',
         'topic', 'item_similarity_score', 'month', 'hour'
-    ]
+    ] + pca_columns
 
     df_for_predict = candidates[train_columns]
 
